@@ -45,9 +45,14 @@ public class JobController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<String>ofindcreateJob(@RequestBody Job job){
-		jobService.createJob(job);
-		return new ResponseEntity<>("Job added successfully:)", HttpStatus.OK);
+	public ResponseEntity<String> createJob(@RequestBody Job job){
+		
+		try {
+			jobService.createJob(job);
+			return new ResponseEntity<>("Job added successfully:)", HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@DeleteMapping("/{id}")
