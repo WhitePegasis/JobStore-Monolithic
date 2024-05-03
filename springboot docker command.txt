@@ -1,0 +1,6 @@
+For linux like terminal(Powershell):
+./mvnw spring-boot:build-image "-Dspring-boot.build-image.imageName=sourav/jobstore-monolithic-h2"
+
+For cmd:
+mvnw.cmd spring-boot:build-image "-Dspring-boot.build-image.imageName=sourav/jobstore-monolithic-h2"
+
