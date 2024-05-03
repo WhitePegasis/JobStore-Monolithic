@@ -27,7 +27,7 @@ public class JobController {
 	@Autowired
 	private JobService jobService; 
 	
-	@GetMapping("/")
+	@GetMapping
 //	@RequestMapping(value = "/jobs", method = RequestMethod.GET)
 	public ResponseEntity<List<Job>> findAll(){
 		return ResponseEntity.ok(jobService.findAll());
@@ -44,13 +44,13 @@ public class JobController {
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping("/")
+	@PostMapping
 	public ResponseEntity<String>ofindcreateJob(@RequestBody Job job){
 		jobService.createJob(job);
 		return new ResponseEntity<>("Job added successfully:)", HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/jobs/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteJob(@PathVariable Long id){
 		boolean deleted = jobService.deleteJobById(id);
 		
