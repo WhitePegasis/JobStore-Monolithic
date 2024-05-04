@@ -12,6 +12,7 @@ import com.sourav.jobstore.service.ReviewService;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
+	
     private final ReviewRepository reviewRepository;
     private final CompanyService companyService;
 

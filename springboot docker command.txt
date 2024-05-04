@@ -1,6 +1,69 @@
-For linux like terminal(Powershell):
+STEP 1:
+
+***Creating docker image for linux like terminal(Powershell):***
 ./mvnw spring-boot:build-image "-Dspring-boot.build-image.imageName=sourav/jobstore-monolithic-h2"
 
-For cmd:
+
+***Creating docker image for cmd:***
 mvnw.cmd spring-boot:build-image "-Dspring-boot.build-image.imageName=sourav/jobstore-monolithic-h2"
+
+
+Step 2:
+
+2.a) ***Setup Postgres Manually:***
+
+docker network create my-network
+
+docker run -d \
+  --name  postgres_container \
+  -e POSTGRES_USER=sourav \
+  -e POSTGRES_PASSWORD=sourav \
+  -e PGDATA=/data/postgres \
+  -p 5432:5432 \
+  --network my-network \
+  --restart unless-stopped \
+  postgres
+
+(Note: You can change password from application.properties)
+
+docker run -d \
+  --name pgadmin_container \
+  -e PGADMIN_DEFAULT_EMAIL=admin@mail.com \
+  -e PGADMIN_DEFAULT_PASSWORD=sourav \
+  -e PGADMIN_CONFIG_SERVER_MODE=False \
+  -v pgadmin:/var/lib/pgadmin \
+  -p 5050:80 \
+  --network my-network \
+  --restart unless-stopped \
+  dpage/pgadmin4
+
+docker exec -it pgadmin ping postgredb
+
+
+2.b) ***Setup Postgres using docker-compose:***
+
+docker-compose up -d
+
+STEP 3:
+
+***Open pgadmin in browser (localhost:5050) and create a container with any name 
+and username "sourav" or any name you have provided in application.properties
+and database name with "jobapp" or any name you have provided in application.properties.***
+
+
+STEP 4: 
+
+***Run jobstore dockerized app using docker***
+
+docker pull whitepegasus1603/jobstore-monolithic-h2
+
+docker run -d -p 8080:8080 --name jobstoreapp whitepegasus1603/jobstore-monolithic-h2
+
+STEP 5:
+
+***Now you are good to go to run and test the app using postman or any other application.***
+
+
+
+
 
